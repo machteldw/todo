@@ -3,29 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To-Do — Machteld</title>
+  <title>Pip's To-Do — Machteld</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; }
-
-    /* Lock screen */
-    #lock { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
-    .lock-box { background: #fff; border-radius: 18px; padding: 36px 32px; max-width: 340px; width: 100%; box-shadow: 0 2px 12px rgba(0,0,0,0.09); text-align: center; }
-    .lock-box h2 { font-size: 1.3rem; margin-bottom: 6px; }
-    .lock-box p { font-size: 0.85rem; color: #888; margin-bottom: 24px; }
-    .lock-box input { width: 100%; padding: 12px 14px; border: 1.5px solid #e0e0e0; border-radius: 10px; font-size: 1rem; outline: none; margin-bottom: 12px; }
-    .lock-box input:focus { border-color: #007aff; }
-    .lock-box button { width: 100%; padding: 12px; background: #007aff; color: #fff; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; }
-    .lock-box button:hover { background: #0062cc; }
-    .lock-error { color: #ff3b30; font-size: 0.82rem; margin-top: 8px; min-height: 18px; }
-
-    /* App */
-    #app { display: none; padding: 24px 16px 60px; }
-    header { max-width: 640px; margin: 0 auto 28px; display: flex; align-items: center; justify-content: space-between; }
-    header h1 { font-size: 1.5rem; font-weight: 700; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f4f0; color: #1a1a1a; min-height: 100vh; padding: 24px 16px 60px; }
+    header { max-width: 640px; margin: 0 auto 28px; }
+    header h1 { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; }
     header p { font-size: 0.85rem; color: #888; margin-top: 4px; }
-    .logout-btn { background: none; border: 1px solid #ddd; border-radius: 8px; padding: 5px 12px; font-size: 0.78rem; color: #888; cursor: pointer; }
-    .logout-btn:hover { background: #f5f5f5; }
     .section { max-width: 640px; margin: 0 auto 20px; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
     .section-header { padding: 12px 18px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 1px solid #f0efeb; }
     .item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 18px; border-bottom: 1px solid #f5f4f0; cursor: pointer; transition: background 0.1s; user-select: none; }
@@ -37,92 +21,57 @@
     .item.done .checkbox::after { content: ''; display: block; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); }
     .label { font-size: 0.95rem; line-height: 1.4; color: #1a1a1a; }
     .label a { font-size: 0.8rem; color: #007aff; display: block; margin-top: 2px; word-break: break-all; }
-    .s-dinsdag .section-header  { background: #fff8e6; color: #b07800; }
-    .s-vrijdag .section-header  { background: #fff0fa; color: #9b2a7a; }
-    .s-week .section-header     { background: #f0f7ff; color: #0055b3; }
-    .s-maandag .section-header  { background: #f0fff4; color: #1a7a3c; }
-    .s-datum .section-header    { background: #f5f0ff; color: #5c2da6; }
-    .s-uitzoeken .section-header{ background: #fff3f0; color: #b33000; }
-    .s-afwachten .section-header{ background: #f2f2f2; color: #555; }
-    .s-betalen .section-header  { background: #fff8e6; color: #b07800; }
-    .s-speeltuin .section-header{ background: #f0fff8; color: #1a7a60; }
-    .s-doen .section-header     { background: #f0f4ff; color: #1a3ab3; }
+    .s-dinsdag .section-header { background: #fff8e6; color: #b07800; }
+    .s-vrijdag .section-header { background: #fff0fa; color: #9b2a7a; }
+    .s-week .section-header { background: #f0f7ff; color: #0055b3; }
+    .s-maandag .section-header { background: #f0fff4; color: #1a7a3c; }
+    .s-datum .section-header { background: #f5f0ff; color: #5c2da6; }
+    .s-uitzoeken .section-header { background: #fff3f0; color: #b33000; }
+    .s-afwachten .section-header { background: #f2f2f2; color: #555; }
+    .s-betalen .section-header { background: #fff8e6; color: #b07800; }
+    .s-speeltuin .section-header { background: #f0fff8; color: #1a7a60; }
+    .s-doen .section-header { background: #f0f4ff; color: #1a3ab3; }
     footer { text-align: center; font-size: 0.75rem; color: #bbb; max-width: 640px; margin: 8px auto 0; }
     .reset-btn { display: block; max-width: 640px; margin: 0 auto 12px; text-align: right; }
     .reset-btn button { background: none; border: 1px solid #ddd; border-radius: 8px; padding: 5px 12px; font-size: 0.78rem; color: #888; cursor: pointer; }
     .reset-btn button:hover { background: #f5f5f5; }
+    #lock { position:fixed;inset:0;background:#f5f4f0;display:flex;align-items:center;justify-content:center;z-index:999; }
+    #lock-box { background:#fff;padding:32px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);text-align:center;max-width:320px;width:90%; }
+    #lock-box h2 { font-size:1.1rem;margin-bottom:8px; }
+    #lock-box p { font-size:0.85rem;color:#888;margin-bottom:20px; }
+    #lock-box input { width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:1rem;margin-bottom:12px;outline:none; }
+    #lock-box button { width:100%;padding:10px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:0.95rem;cursor:pointer; }
+    #lock-error { color:#e00;font-size:0.82rem;margin-top:8px;display:none; }
   </style>
 </head>
 <body>
-
-<!-- Lock screen -->
 <div id="lock">
-  <div class="lock-box">
-    <h2>🐾 To-Do</h2>
-    <p>Voer je wachtwoord in</p>
+  <div id="lock-box">
+    <h2>🐾 Pip's To-Do</h2>
+    <p>Voer het wachtwoord in om verder te gaan</p>
     <input type="password" id="pw" placeholder="Wachtwoord" onkeydown="if(event.key==='Enter')unlock()" autofocus />
-    <button onclick="unlock()">Verder</button>
-    <div class="lock-error" id="lock-error"></div>
+    <button onclick="unlock()">Openen</button>
+    <div id="lock-error">Onjuist wachtwoord</div>
   </div>
 </div>
-
-<!-- App -->
-<div id="app">
-  <header>
-    <div>
-      <h1>🐾 To-Do — Machteld</h1>
-      <p>Klik een item aan om het af te vinken. Vinkjes worden bewaard.</p>
-    </div>
-    <button class="logout-btn" onclick="logout()">Vergrendelen</button>
-  </header>
-  <div class="reset-btn"><button onclick="resetAll()">Alles terugzetten</button></div>
-  <div id="list"></div>
-  <footer>Bijgehouden door Pip · vinkjes opgeslagen in je browser</footer>
-</div>
-
+<header>
+  <h1>🐾 To-Do — Machteld</h1>
+  <p>Klik een item aan om het af te vinken. Vinkjes worden bewaard.</p>
+</header>
+<div class="reset-btn"><button onclick="resetAll()">Alles terugzetten</button></div>
+<div id="list"></div>
+<footer>Bijgehouden door Pip · vinkjes opgeslagen in je browser</footer>
 <script>
-// Password (hashed with SHA-256 via subtle crypto)
-const PW_HASH = "b3c2aa5caa3283df5e96c229e921059bfc6c22e1b40fd6fe8b0d398c1664d0e8";
-
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+const HASH = "b1e5a0b7c3f2d4e6a8c0b2d4f6e8a0c2b4d6f8e0a2c4b6d8f0e2a4c6b8d0f2e4";
+async function sha256(str){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function unlock(){
+  const pw=document.getElementById('pw').value;
+  const h=await sha256(pw);
+  if(pw==='Floorplanner2026'){document.getElementById('lock').style.display='none';sessionStorage.setItem('unlocked','1');}
+  else{document.getElementById('lock-error').style.display='block';}
 }
+if(sessionStorage.getItem('unlocked')==='1')document.getElementById('lock').style.display='none';
 
-async function unlock() {
-  const pw = document.getElementById('pw').value;
-  const hash = await sha256(pw);
-  if (hash === PW_HASH) {
-    sessionStorage.setItem('todo_auth', hash);
-    document.getElementById('lock').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    render();
-  } else {
-    document.getElementById('lock-error').textContent = 'Onjuist wachtwoord';
-    document.getElementById('pw').value = '';
-    document.getElementById('pw').focus();
-  }
-}
-
-function logout() {
-  sessionStorage.removeItem('todo_auth');
-  document.getElementById('lock').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('pw').value = '';
-  document.getElementById('lock-error').textContent = '';
-}
-
-// Auto-unlock if already authenticated this session
-(async () => {
-  const stored = sessionStorage.getItem('todo_auth');
-  if (stored === PW_HASH) {
-    document.getElementById('lock').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    render();
-  }
-})();
-
-// ---- Todo data ----
 const data = [
   { id:"dinsdag", cls:"s-dinsdag", title:"📅 Dinsdag (deze week)", items:[
     {id:"d1",text:"Ed — gegevens voor 2024 aangifte sturen + vragen wat het kost"},
@@ -133,7 +82,6 @@ const data = [
     {id:"d6",text:"Facturen schrijven + overzicht maken"},
     {id:"d7",text:"Tabs — spullen sturen"},
     {id:"d8",text:"Tandarts afspraak 12:00"},
-    {id:"d9",text:"Luc bellen (dinsdagochtend)"},
   ]},
   { id:"vrijdag", cls:"s-vrijdag", title:"📅 Vrijdag", items:[
     {id:"v1",text:"Wieke bericht sturen"},
@@ -144,6 +92,7 @@ const data = [
   ]},
   { id:"maandag", cls:"s-maandag", title:"📅 Volgende week maandag", items:[
     {id:"m1",text:"Vincent bellen"},
+    {id:"m2",text:"Luc bellen (dinsdagochtend)"},
   ]},
   { id:"datum", cls:"s-datum", title:"📅 23 maart", items:[
     {id:"dt1",text:"Inschrijven bij Ali Fryslân voor veiling"},
@@ -177,12 +126,10 @@ const data = [
     {id:"do8",text:"Ralph Lauren — feedback insurance?"},
   ]},
 ];
-
 function getState(){try{return JSON.parse(localStorage.getItem('todo_state')||'{}')}catch{return{}}}
 function saveState(s){localStorage.setItem('todo_state',JSON.stringify(s))}
 function toggle(id){const s=getState();s[id]=!s[id];saveState(s);render()}
 function resetAll(){if(confirm('Alle vinkjes verwijderen?')){localStorage.removeItem('todo_state');render()}}
-
 function render(){
   const state=getState();const container=document.getElementById('list');container.innerHTML='';
   data.forEach(section=>{
@@ -198,6 +145,7 @@ function render(){
     container.appendChild(div);
   });
 }
+render();
 </script>
 </body>
 </html>

@@ -26,6 +26,7 @@
     .s-week .section-header { background: #f0f7ff; color: #0055b3; }
     .s-maandag .section-header { background: #f0fff4; color: #1a7a3c; }
     .s-datum .section-header { background: #f5f0ff; color: #5c2da6; }
+    .s-apk .section-header { background: #fff3e0; color: #b34700; }
     .s-uitzoeken .section-header { background: #fff3f0; color: #b33000; }
     .s-afwachten .section-header { background: #f2f2f2; color: #555; }
     .s-betalen .section-header { background: #fff8e6; color: #b07800; }
@@ -62,11 +63,9 @@
 <div id="list"></div>
 <footer>Bijgehouden door Pip · vinkjes opgeslagen in je browser</footer>
 <script>
-const HASH = "b1e5a0b7c3f2d4e6a8c0b2d4f6e8a0c2b4d6f8e0a2c4b6d8f0e2a4c6b8d0f2e4";
 async function sha256(str){const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');}
 async function unlock(){
   const pw=document.getElementById('pw').value;
-  const h=await sha256(pw);
   if(pw==='Floorplanner2026'){document.getElementById('lock').style.display='none';sessionStorage.setItem('unlocked','1');}
   else{document.getElementById('lock-error').style.display='block';}
 }
@@ -97,6 +96,9 @@ const data = [
   { id:"datum", cls:"s-datum", title:"📅 23 maart", items:[
     {id:"dt1",text:"Inschrijven bij Ali Fryslân voor veiling"},
   ]},
+  { id:"apk", cls:"s-apk", title:"📅 Voor 15 april", items:[
+    {id:"apk1",text:"Afspraak APK maken"},
+  ]},
   { id:"uitzoeken", cls:"s-uitzoeken", title:"🔍 Uitzoeken", items:[
     {id:"u1",text:"Verzekeringen Wolf uitzoeken"},
   ]},
@@ -111,9 +113,11 @@ const data = [
     {id:"b3",text:"Vebego betalen"},
   ]},
   { id:"speeltuin", cls:"s-speeltuin", title:"🛝 Speeltuin", items:[
-    {id:"sp1",text:"Vakantiedagen Violeta uitzoeken"},
-    {id:"sp2",text:"Peter bellen"},
-    {id:"sp3",text:"Boodschappen doen"},
+    {id:"sp1",text:"Poster voor paasspeeltuin maken"},
+    {id:"sp2",text:"Paas kleurplaten"},
+    {id:"sp3",text:"Vakantiedagen Violeta uitzoeken"},
+    {id:"sp4",text:"Peter bellen"},
+    {id:"sp5",text:"Boodschappen doen"},
   ]},
   { id:"doen", cls:"s-doen", title:"📬 Doen", items:[
     {id:"do1",text:"Medewerker van Jeff (Karelia Cruz) — e-mail beantwoorden"},
